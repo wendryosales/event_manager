@@ -23,6 +23,12 @@ lib-cov
 coverage
 *.lcov
 
+# jetbrains
+.idea/
+
+
+build
+
 # nyc test coverage
 .nyc_output
 
