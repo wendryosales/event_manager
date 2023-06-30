@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id               Int               @id @default(autoincrement())
+  name             String            @unique
+  EventsCategories EventCategories[]
+}
+
+model Events {
+  id                Int                 @id @default(autoincrement())
+  title             String              @db.VarChar(101)
+  description       String              @default("")
+  date              DateTime
+  location          String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  EventParticipants EventParticipants[]
+  EventCategories   EventCategories[]
+}
+
+model Participants {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  email              String              @unique
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  EventsParticipants EventParticipants[]
+}
+
+model EventParticipants {
+  eventId       Int
+  participantId Int
+  Events        Events       @relation(fields: [eventId], references: [id])
+  Participants  Participants @relation(fields: [participantId], references: [id])
+
+  @@id([eventId, participantId])
+}
+
+model EventCategories {
+  eventId    Int
+  categoryID Int
+  Events     Events     @relation(fields: [eventId], references: [id])
+  Categories Categories @relation(fields: [categoryID], references: [id])
+
+  @@id([eventId, categoryID])
+}
