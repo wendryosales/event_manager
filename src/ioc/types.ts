@@ -1,2 +1,2 @@
-export const EVENT_SERVICE = 'EVENT_SERVICE';
-export const EVENT_REPOSITORY = 'EVENT_REPOSITORY';
+export const EVENT_SERVICE = 'IEventService';
+export const EVENT_REPOSITORY = 'IEventRepository';
