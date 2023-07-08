@@ -10,6 +10,8 @@ services:
     command: npm run dev
     volumes:
       - ./src:/app/src
+    environment:
+      - DATABASE_URL=postgresql://user:password@localhost:5432/event_manager
     depends_on:
       db:
         condition: service_healthy

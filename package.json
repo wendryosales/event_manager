@@ -8,6 +8,7 @@
     "compose:up": "docker-compose up -d --build",
     "compose:down": "docker-compose down --remove-orphans",
     "docker:logs": "docker-compose logs -f",
+    "predev": "prisma migrate dev --name init & prisma generate & npx tsoa spec-and-routes",
     "dev": "nodemon ./src/server.ts",
     "build": "tsc"
   },
