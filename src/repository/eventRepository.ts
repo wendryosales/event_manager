@@ -9,6 +9,16 @@ class EventRepository implements IEventRepository {
   constructor(connection = prismaClient) {
     this.connection = connection;
   }
+  updateEvent(eventId: number, body: Partial<ICreateEvent>): Promise<Events> {
+    return this.connection.events.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        ...body,
+      },
+    });
+  }
 
   createEvent(event: ICreateEvent) {
     return this.connection.events.create({

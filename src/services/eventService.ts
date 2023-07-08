@@ -12,6 +12,9 @@ class EventService implements IEventService {
   constructor(@inject(EVENT_REPOSITORY) repository: IEventRepository) {
     this._repository = repository;
   }
+  updateEvent(eventId: number, body: Partial<ICreateEvent>): Promise<Events> {
+    return this._repository.updateEvent(eventId, body);
+  }
 
   createEvent(body: ICreateEvent): Promise<Events> {
     return this._repository.createEvent(body);
