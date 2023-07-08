@@ -1,16 +1,25 @@
 import { Events } from '@prisma/client';
-import IEventRepository from '../interfaces/repository/IEventRepository';
 import prismaClient from '../database';
+import IEventRepository from '../interfaces/repository/IEventRepository';
+import { ICreateEvent } from '../types/events';
 
 class EventRepository implements IEventRepository {
-  private prismaClient: typeof prismaClient;
+  private connection: typeof prismaClient;
 
-  constructor() {
-    this.prismaClient = prismaClient;
+  constructor(connection = prismaClient) {
+    this.connection = connection;
   }
 
-  public async getEvents(): Promise<Events[]> {
-    return this.prismaClient.events.findMany();
+  createEvent(event: ICreateEvent) {
+    return this.connection.events.create({
+      data: {
+        ...event,
+      },
+    });
+  }
+
+  getEvents(): Promise<Events[]> {
+    return this.connection.events.findMany();
   }
 }
 

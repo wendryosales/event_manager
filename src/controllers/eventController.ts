@@ -1,9 +1,11 @@
-import { Controller, Get, Route, Tags } from 'tsoa';
 import { Events } from '@prisma/client';
-import { inject } from 'tsyringe';
+import { Body, Controller, Get, Post, Route, Tags } from 'tsoa';
+import { inject, injectable } from 'tsyringe';
 import IEventService from '../interfaces/services/IEventService';
 import { EVENT_SERVICE } from '../ioc/types';
+import { ICreateEvent } from '../types/events';
 
+@injectable()
 @Route('events')
 @Tags('Events')
 export class EventController extends Controller {
@@ -15,8 +17,15 @@ export class EventController extends Controller {
   }
 
   @Get('/')
-  public getEvents(): Promise<Events[]> {
+  getEvents(): Promise<Events[]> {
     return this._service.getEvents();
+  }
+
+  @Post('/')
+  createEvent(
+    @Body() body: ICreateEvent,
+  ): Promise<Events> {
+    return this._service.createEvent(body);
   }
 }
 
